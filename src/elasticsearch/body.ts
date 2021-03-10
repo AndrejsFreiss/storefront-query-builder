@@ -438,7 +438,7 @@ export default class RequestBody {
     return body
         .orQuery('multi_match', 'fields', searchableFields, getMultiMatchConfig(this.config, queryText))
         .orQuery('bool', b => b.orQuery('terms', 'configurable_children.sku', queryText.split('-'))
-            .orQuery('match_phrase', 'sku', { query: queryText, boost: 1 })
+            .orQuery('wildcard', 'sku', { value: '*' + queryText + '*', boost: 50 })
             .orQuery('match_phrase', 'configurable_children.sku', { query: queryText, boost: 1 }))
   }
 
